@@ -1,0 +1,6 @@
+@Buccaneer_banter_glam_rock_HostAddress = http://localhost:5161
+
+GET {{Buccaneer_banter_glam_rock_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
