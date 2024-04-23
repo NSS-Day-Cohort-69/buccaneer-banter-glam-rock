@@ -1,5 +1,5 @@
 namespace BuccaneerBanter.Models.DTOs;
-public class Follower
+public class FollowerDTO
 {
     public int Id { get; set; }
     public int PirateId { get; set; }

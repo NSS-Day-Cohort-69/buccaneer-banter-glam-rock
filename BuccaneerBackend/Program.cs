@@ -1,4 +1,5 @@
 using BuccaneerBanter.Models;
+using BuccaneerBanter.Models.DTOs;
 
 List<Pirate> pirates = new List<Pirate>
 {
@@ -296,6 +297,8 @@ List<Follower> followers = new List<Follower>
 };
 
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -314,8 +317,20 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
+app.MapGet("/stories", () =>
+{
+    return stories.Select(s => new StoryDTO
+    {
+        Id = s.Id,
+        Title = s.Title,
+        Pirate = new PirateDTO
+        {
+            Id = s.Pirate.Id,
+            Name = s.Pirate.Name
+        },
+        Content = s.Content,
+        Date = s.Date
+    });
+});
 
 app.Run();
-
-
