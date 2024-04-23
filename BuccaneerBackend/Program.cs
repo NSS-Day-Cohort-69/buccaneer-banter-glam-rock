@@ -334,7 +334,7 @@ app.MapGet("/api/stories" , () => {
 });
 
 app.MapGet("/api/pirate/{id}", (int id) => {
-Pirate pirate = pirates.FirstorDefault(p => p.Id == id);
+Pirate pirate = pirates.FirstOrDefault(p => p.Id == id);
 if (pirate == null) {
     return Results.NotFound();
 }
