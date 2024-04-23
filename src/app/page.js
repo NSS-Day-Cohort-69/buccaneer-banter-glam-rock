@@ -6,6 +6,7 @@ import Login from "@/components/login"
 import Navbar from "@/components/navbar"
 import '@/styles/globals.css'
 import '@/styles/captainslog.css'
+import { Hello } from '@/components/story/storyauthorinfo.js'
 
 
 const Index = () => {
@@ -18,6 +19,7 @@ const Index = () => {
     return <>
         <Navbar setIsLoggedIn={setIsLoggedIn} />
         <Dashboard />
+        
     </>
 }
 
