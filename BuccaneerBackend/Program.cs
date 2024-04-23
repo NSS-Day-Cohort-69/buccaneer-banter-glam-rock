@@ -1,3 +1,4 @@
+using BuccaneerBanter.Models;
 using BuccaneerBanter.Models.DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +19,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/stories" , () => {
+app.MapGet("/api/stories" , () => {
     return stories.Select(s => new StoryDTO
     {
         Id = s.Id,
@@ -33,5 +34,25 @@ app.MapGet("/stories" , () => {
     });
 });
 
+app.MapGet("/api/pirate/{id}", (int id) => {
+Pirate pirate = pirates.FirstorDefault(p => p.Id == id);
+if (pirate == null) {
+    return Results.NotFound();
+}
+
+return Results.Ok( new PirateDTO
+    {
+        Id = pirate.Id,
+        Name = pirate.Name,
+        Age = pirate.Age,
+        Nationality = pirate.Nationality,
+        Rank = pirate.Rank,
+        Ship = pirate.Ship,
+        ImageUrl = pirate.ImageUrl
+
+    });
+ });
+
 app.Run();
+
 
