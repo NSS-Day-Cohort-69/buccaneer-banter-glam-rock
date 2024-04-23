@@ -8,7 +8,7 @@ export default function Dashboard() {
     const [myFavoriteScallywags, setScallyWags] = useState([])
 
     const getPirate = (id) => {
-        fetch(`http://localhost:8088/pirates/${id}`)
+        fetch(`/api/pirates/${id}`)
             .then(response => response.json())
             .then((res) => {
                 setCurrentPirate(res)
