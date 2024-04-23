@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+using BuccaneerBanter.Models;
 using BuccaneerBanter.Models.DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +34,12 @@ app.MapGet("/stories" , () => {
         Date = s.Date
     });
 });
+
+
+// app.MapPost("/followers/{userId}", (int userId, int followerId) =>
+// {
+//     Pirate follower = pirates.FirstOrDefault(p => p.pirateId == userId);   
+// });
 
 app.Run();
 
