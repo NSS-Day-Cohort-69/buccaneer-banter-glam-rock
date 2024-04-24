@@ -30,6 +30,7 @@ export default function Dashboard() {
             getFavoritePirates(pirate_id)
         }
     }, [])
+    
 
     return (
         <main className='captainsLog'>
