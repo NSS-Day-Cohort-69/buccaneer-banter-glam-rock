@@ -1,7 +1,7 @@
 
 using BuccaneerBanter.Models;
 
-using BuccaneerBanter.Models;
+
 using BuccaneerBanter.Models.DTOs;
 
 List<Pirate> pirates = new List<Pirate>
@@ -397,7 +397,7 @@ app.MapPost("/followers", (Follower follower) =>
     Id = follower.Id,
     PirateId = follower.PirateId,
     FollowerId = follower.FollowerId,
-    FollowersDTO = new PirateDTO
+    Pirate = new PirateDTO
     {
       Id = following.Id,
       Name = following.Name,
@@ -409,6 +409,40 @@ app.MapPost("/followers", (Follower follower) =>
     }
 
   });
+});
+
+app.MapGet("/followers/{id}", (int id) =>
+{
+  List<Follower> filteredFollower = new List<Follower>();
+  foreach (Follower follower in followers)
+  {
+
+    if (follower.FollowerId == id)
+    {
+      follower.pirate = pirates.FirstOrDefault(p => p.Id == follower.PirateId);
+      filteredFollower.Add(follower);
+
+    }
+  }
+
+
+
+  return Results.Ok(filteredFollower.Select(f => new FollowerDTO
+  {
+    Id = f.Id,
+    PirateId = f.PirateId,
+    FollowerId = f.FollowerId,
+    Pirate = new PirateDTO
+    {
+      Id = f.pirate.Id,
+      Name = f.pirate.Name,
+      Age = f.pirate.Age,
+      Nationality = f.pirate.Nationality,
+      Rank = f.pirate.Rank,
+      Ship = f.pirate.Ship,
+      ImageUrl = f.pirate.ImageUrl
+    },
+  }));
 });
 
 
