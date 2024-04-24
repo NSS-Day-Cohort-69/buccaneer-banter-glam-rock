@@ -1,3 +1,4 @@
+
 namespace BuccaneerBanter.Models.DTOs;
 public class PirateDTO
 {
@@ -9,3 +10,4 @@ public class PirateDTO
     public string Ship { get; set; }
     public string ImageUrl { get; set; }
 }
+

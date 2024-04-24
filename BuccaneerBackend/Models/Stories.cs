@@ -1,3 +1,5 @@
+using BuccaneerBanter.Models.DTOs;
+
 namespace BuccaneerBanter.Models;
 public class Story
 {
@@ -6,6 +8,6 @@ public class Story
     public int PirateId { get; set; }
     public string Content { get; set; }
     public string Date { get; set; }
-    public List<Pirate> Pirate {get; set;}
+    public Pirate Pirate { get; set; }
 
 }

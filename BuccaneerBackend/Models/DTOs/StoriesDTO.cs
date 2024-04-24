@@ -7,6 +7,6 @@ public class StoryDTO
     public int PirateId { get; set; }
     public string Content { get; set; }
     public string Date { get; set; }
-    public List<Pirate> Pirate {get; set;}
+    public PirateDTO Pirate { get; set; }
 
 }
