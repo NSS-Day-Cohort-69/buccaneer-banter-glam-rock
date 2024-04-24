@@ -330,11 +330,17 @@ app.MapGet("/api/stories", () =>
   {
     Id = s.Id,
     Title = s.Title,
+    PirateId = s.PirateId,
     Pirate = new PirateDTO
 
     {
       Id = s.Pirate.Id,
-      Name = s.Pirate.Name
+      Name = s.Pirate.Name,
+      Age = s.Pirate.Age,
+      Nationality = s.Pirate.Nationality,
+      Rank = s.Pirate.Rank,
+      Ship = s.Pirate.Ship,
+      ImageUrl = s.Pirate.ImageUrl
     },
 
 
@@ -342,25 +348,7 @@ app.MapGet("/api/stories", () =>
     Date = s.Date
   });
 });
-app.MapGet("/api/stories", () =>
-{
-  foreach (Story story in stories)
-  {
-    story.Pirate = pirates.FirstOrDefault(p => p.Id == story.PirateId);
-  };
-  return stories.Select(s => new StoryDTO
-  {
-    Id = s.Id,
-    Title = s.Title,
-    Pirate = new PirateDTO
-    {
-      Id = s.Pirate.Id,
-      Name = s.Pirate.Name
-    },
-    Content = s.Content,
-    Date = s.Date
-  });
-});
+
 
 app.MapGet("/api/pirate/{id}", (int id) =>
 {
