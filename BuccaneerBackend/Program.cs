@@ -1,5 +1,7 @@
 
 using BuccaneerBanter.Models;
+
+using BuccaneerBanter.Models;
 using BuccaneerBanter.Models.DTOs;
 
 List<Pirate> pirates = new List<Pirate>
@@ -319,6 +321,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapGet("/api/stories" , () => {
+  foreach ( Story story in stories)
+  {
+    story.Pirate = pirates.FirstOrDefault(p => p.Id == story.PirateId);
+  };
     return stories.Select(s => new StoryDTO
     {
         Id = s.Id,
@@ -351,6 +357,38 @@ return Results.Ok( new PirateDTO
 
     });
  });
+
+
+app.MapPost("/api/followers", (Follower follower) =>
+{
+    Pirate followerPirate = pirates.FirstOrDefault(p => p.Id == follower.PirateId);
+    Pirate following = pirates.FirstOrDefault(f => f.Id == follower.FollowerId);
+    if(follower == null )
+    {
+        return Results.BadRequest();
+    }
+   
+
+    follower.Id = followers.Max(f => f.Id) + 1;
+    followers.Add(follower);
+
+    return Results.Created($"/followers/{follower.Id}", new FollowerDTO{
+        Id = follower.Id,
+        PirateId=follower.PirateId,
+        FollowerId=follower.FollowerId,
+        FollowersDTO = new PirateDTO{
+            Id=following.Id,
+            Name = following.Name,
+            Age = following.Age,
+            Nationality = following.Nationality,
+            Rank = following.Rank,
+            Ship= following.Ship,
+            ImageUrl= following.ImageUrl
+        }
+        
+    });
+        });
+        
 
 app.Run();
 
