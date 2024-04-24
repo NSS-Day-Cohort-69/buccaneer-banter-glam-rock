@@ -6,7 +6,7 @@ const WantedPoster = ({ currentPirate }) => {
   const [pirate, setPirate] = useState({})
 
   async function fetchPirateProfile() {
-    const response = await fetch(`/api/pirate/${currentPirate.id}`)
+    const response = await fetch(`https://localhost:7010/pirates/${currentPirate.id}`)
     const data = await response.json()
     setPirate(data)
   }

@@ -7,7 +7,7 @@ const StoryList = ({ myFavoriteScallywags, getFavoritePirates }) => {
     const [stories, setStories] = useState([])
 
     const fetchStories = async () => {
-        const res = await fetch('/api/stories')
+        const res = await fetch('https://localhost:7010/stories')
         const data = await res.json()
         setStories(data)
     }

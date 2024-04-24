@@ -308,6 +308,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -316,11 +317,17 @@ if (app.Environment.IsDevelopment())
 {
   app.UseSwagger();
   app.UseSwaggerUI();
+  app.UseCors(options =>
+            {
+              options.AllowAnyOrigin();
+              options.AllowAnyMethod();
+              options.AllowAnyHeader();
+            });
 }
 
 app.UseHttpsRedirection();
 
-app.MapGet("/api/stories", () =>
+app.MapGet("/stories", () =>
 {
   foreach (Story story in stories)
   {
@@ -350,7 +357,7 @@ app.MapGet("/api/stories", () =>
 });
 
 
-app.MapGet("/api/pirate/{id}", (int id) =>
+app.MapGet("/pirates/{id}", (int id) =>
 {
   Pirate pirate = pirates.FirstOrDefault(p => p.Id == id);
   if (pirate == null)
@@ -372,7 +379,7 @@ app.MapGet("/api/pirate/{id}", (int id) =>
 });
 
 
-app.MapPost("/api/followers", (Follower follower) =>
+app.MapPost("/followers", (Follower follower) =>
 {
   Pirate followerPirate = pirates.FirstOrDefault(p => p.Id == follower.PirateId);
   Pirate following = pirates.FirstOrDefault(f => f.Id == follower.FollowerId);
