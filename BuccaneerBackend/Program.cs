@@ -447,39 +447,67 @@ app.MapGet("/followers/{id}", (int id) =>
 
 app.MapDelete("/followers/{id}", (int id) =>
 {
-    Follower followerObj = followers.FirstOrDefault(f => f.Id == id);
-    if(followerObj != null)
-    {
-      followers.Remove(followerObj);
-    }
-    else
-    {
-      return Results.NotFound();
-    }
-    return Results.NoContent();
+  Follower followerObj = followers.FirstOrDefault(f => f.Id == id);
+  if (followerObj != null)
+  {
+    followers.Remove(followerObj);
+  }
+  else
+  {
+    return Results.NotFound();
+  }
+  return Results.NoContent();
 });
 
-app.MapGet("/followers", (int? followerId, int? pirateId) => 
+app.MapGet("/followers", (int? followerId, int? pirateId) =>
 {
-    List<Follower> foundFollowers = new List<Follower>();
+  List<Follower> foundFollowers = new List<Follower>();
 
-    foreach(Follower follower in followers)
+  foreach (Follower follower in followers)
+  {
+    if (follower.FollowerId == followerId && follower.PirateId == pirateId)
     {
-      if(follower.FollowerId == followerId && follower.PirateId == pirateId)
-        {
-          foundFollowers.Add(follower);
-        }
+      foundFollowers.Add(follower);
     }
-    List<FollowerDTO> pirate = foundFollowers.Select(p => new FollowerDTO 
-    {
-        Id = p.Id,
-        FollowerId = p.FollowerId,
-        PirateId = p.PirateId
-    }) .ToList();
-    return Results.Ok(pirate);
-    
+  }
+  List<FollowerDTO> pirate = foundFollowers.Select(p => new FollowerDTO
+  {
+    Id = p.Id,
+    FollowerId = p.FollowerId,
+    PirateId = p.PirateId
+  }).ToList();
+  return Results.Ok(pirate);
+
 });
 
+app.MapGet("/pirates", (string name, string ship) =>
+{
+  PirateDTO pirateObj = null;
+  foreach (Pirate pirate in pirates)
+  {
+    if (pirate.Name == name && pirate.Ship == ship)
+    {
+      pirateObj = new PirateDTO
+      {
+        Id = pirate.Id,
+        Name = pirate.Name,
+        Age = pirate.Age,
+        Nationality = pirate.Nationality,
+        Rank = pirate.Rank,
+        Ship = pirate.Ship,
+        ImageUrl = pirate.ImageUrl
+      };
+    }
+  }
+  if (pirateObj == null)
+  {
+    return Results.BadRequest();
+  }
+  else
+  {
+    return Results.Ok(pirateObj);
+  }
+});
 
 
 app.Run();

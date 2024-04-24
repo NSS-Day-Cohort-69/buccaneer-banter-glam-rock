@@ -10,7 +10,7 @@ const Login = ({ onLogin }) => {
     const handleSubmit = async (event) => {
         event.preventDefault()
 
-        const response = await fetch(`http://localhost:8088/pirates?name=${name}&ship=${shipName}`)
+        const response = await fetch(`https://localhost:7010/pirates?name=${name}&ship=${shipName}`)
 
         if (!response.ok) {
             alert('Invalid credentials')
@@ -19,7 +19,7 @@ const Login = ({ onLogin }) => {
 
         const pirate = await response.json()
         onLogin()
-        localStorage.setItem('pirateId', pirate[0].id)
+        localStorage.setItem('pirateId', pirate.id)
         router.push('/')
     }
 
