@@ -10,8 +10,8 @@ const follow = (follower, following, action) => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            followerId: parseInt(follower),
-            pirateId: parseInt(following)
+            followerId: parseInt(follower), //current user
+            pirateId: parseInt(following)  // story author
         })
     })
         .then(response => response.json())
@@ -19,12 +19,12 @@ const follow = (follower, following, action) => {
 }
 
 const unfollow = (follower, following, action) => {
-    fetch(`http://localhost:8088/followers?followerId=${follower}&pirateId=${following}`)
+    fetch(`https://localhost:7010/followers?followerId=${follower}&pirateId=${following}`)
         .then(response => response.json())
         .then(matchArray => {
             const matchId = matchArray[0].id
 
-            fetch(`http://localhost:8088/followers/${matchId}`, {
+            fetch(`https://localhost:7010/followers/${matchId}`, {
                 method: "DELETE"
             }).then(() => action(parseInt(follower)))
         })

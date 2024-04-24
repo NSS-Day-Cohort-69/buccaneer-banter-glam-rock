@@ -445,6 +445,42 @@ app.MapGet("/followers/{id}", (int id) =>
   }));
 });
 
+app.MapDelete("/followers/{id}", (int id) =>
+{
+    Follower followerObj = followers.FirstOrDefault(f => f.Id == id);
+    if(followerObj != null)
+    {
+      followers.Remove(followerObj);
+    }
+    else
+    {
+      return Results.NotFound();
+    }
+    return Results.NoContent();
+});
+
+app.MapGet("/followers", (int? followerId, int? pirateId) => 
+{
+    List<Follower> foundFollowers = new List<Follower>();
+
+    foreach(Follower follower in followers)
+    {
+      if(follower.FollowerId == followerId && follower.PirateId == pirateId)
+        {
+          foundFollowers.Add(follower);
+        }
+    }
+    List<FollowerDTO> pirate = foundFollowers.Select(p => new FollowerDTO 
+    {
+        Id = p.Id,
+        FollowerId = p.FollowerId,
+        PirateId = p.PirateId
+    }) .ToList();
+    return Results.Ok(pirate);
+    
+});
+
+
 
 app.Run();
 
