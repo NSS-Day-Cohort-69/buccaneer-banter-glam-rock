@@ -25,7 +25,7 @@ const WantedPoster = ({ currentPirate }) => {
     <div className={`${styles.card} ${styles.serf}`}>
         <div className={styles.detail}>
             <div className={`${styles.user_photo} ${styles.horizontal_center}`}>
-              <img src={pirate?.image_url} alt={pirate?.name} className={styles.user_photo} />
+              <img src={pirate?.imageUrl} alt={pirate?.name} className={styles.user_photo} />
             </div>
             <p className={styles.serf__title}>Ahoy, my name be </p>
             <p className={styles.serf__name}>{pirate.name}</p>
